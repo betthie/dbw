@@ -1,0 +1,15 @@
+{
+  "name": "dbw",
+  "version": "1.0.0",
+  "dependencies": {
+    "body-parser": "^1.14.0",
+    "express": "^4.13.3",
+    "mongoose": "^4.8.6",
+    "mongoose-assert": "^1.0.2",
+    "nodejs": "0.0.0",
+    "nodemon": "^1.11.0"
+  },
+  "author": "willi.linke",
+  "license": "ISC",
+  "description": "project for datenbanken- und cloudanwendungen by belinda lange and willi linke"
+}
