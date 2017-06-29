@@ -2,23 +2,30 @@
  * Created by Willi on 21.06.2017.
  */
 
-//  create our app w/ express
-const config = require('./config');
-const express = require('express');
-const mongoose = require('mongoose');
 
-
-//  connect controllers
-const app = express();
-const snapshotController = require('controllers/snapshot.controller');
-const stationController = require('controllers/station.controller');
-snapshotController(app);
-stationController(app);
-
-
-//  set port
-const port = process.env.PORT || 8080;
-app.listen(port);
-app.use(express.static('../webclient'));
-
-mongoose.connect(config.getDbConnectionString());
+global.root = __dirname;
+global.application = require('./.lib/core.js');
+application.addServices(root + '/services');
+application.http.publishServices('/', ['json', 'xml']);
+application.http.publishFiles(root + '/content');
+application.onException(function(err) {
+    if (err.type === 'exception') {
+        console.log(err);
+        return {
+            messages: [{
+                type: 'exception',
+                code: 0,
+                text: 'An internal error has occured. Please contact your system administrator'
+            }]
+        };
+    }
+    else if (err.type === 'error') {
+        return {
+            messages: [{
+                type: 'error',
+                code: err.code, // better here will some translation be implemented (server-erros-Codes zu APP-ErrorCodes)
+                text: err.code
+            }]
+        }
+    }
+});

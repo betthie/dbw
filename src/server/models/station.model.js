@@ -18,7 +18,7 @@
         lng: Number,
     });
 
-    // following functions implementing database logic to separate it from controller
+    // implementing database logic to separate it from controller
     stationSchema.statics.create = function(station, callback){
         return this.model('Stations').save(station, callback)
     };

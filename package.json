@@ -7,9 +7,14 @@
     "mongoose": "^4.8.6",
     "mongoose-assert": "^1.0.2",
     "nodejs": "0.0.0",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "chokidar": "^1.6.1",
+    "async": "^2.4.1",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
+    "lodash": "^4.17.4"
   },
   "author": "willi.linke",
-  "license": "ISC",
+  "license": "UNLICENSED",
   "description": "project for datenbanken- und cloudanwendungen by belinda lange and willi linke"
 }

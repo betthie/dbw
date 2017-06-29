@@ -16,7 +16,7 @@
         e10: Number
     });
 
-    // following functions implementing database logic to separate it from controller
+    // implementing database logic to separate it from controller
     snapshotSchema.statics.create = function(callback){
         return this.model('Records').find({}, callback)
     };
