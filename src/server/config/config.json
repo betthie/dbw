@@ -1,5 +1,10 @@
-
 {
-  "username":"dbw_user",
-  "password":"dbwproject1"
+  "database": {
+    "username":"willi.linke",
+    "password":"blink182"
+  },
+  "google": {
+    "API_key": "AIzaSyCbEhNnFhkwWoFFeAZUrwzVDf7TcWk4coI"
+  }
+
 }

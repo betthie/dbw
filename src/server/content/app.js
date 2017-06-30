@@ -9,9 +9,9 @@
     
     'use strict';
 
-    const application = angular.module('application', ['ui.router']);
+    let application = angular.module('application', [ 'ui.router', 'uiGmapgoogle-maps']);
 
-    application.config(function($stateProvider){
+    application.config(function($stateProvider,uiGmapGoogleMapApiProvider){
 
         $stateProvider
             .state('root', {
@@ -19,9 +19,12 @@
                 component: 'root'
             })
 
-
+        uiGmapGoogleMapApiProvider.configure({
+            key: 'AIzaSyCbEhNnFhkwWoFFeAZUrwzVDf7TcWk4coI',
+            v: '3.17',
+            libraries: 'weather,geometry,visualization'
+        });
     });
-
 
 }());
 
