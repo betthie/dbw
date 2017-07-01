@@ -21,35 +21,56 @@
     function RootCtrl($scope, uiGmapGoogleMapApi, Server) {
         "use strict";
         let $ctrl = this;
+        $ctrl.stations = [];
 
-
+        //  initial map
         $ctrl.map = {
             centre:   {
-                latitude: 44.2126995,
-                longitude: -100.2471641
+                latitude: 52.520008,
+                longitude: 13.404954
             },
-            zoom: 3 ,
+            zoom: 10 ,
             options : {
                 scrollwheel: false
+            },
+            events: {
+                click: function(map, eventName, originalEventArgs) {
+                    //  get location of click event
+                    let e = originalEventArgs[0];
+                    let location = {
+                        latitude: e.latLng.lat(),
+                        longitude: e.latLng.lng()
+                    };
+                    $ctrl.getStations(location)
+
+                }
             }
         };
 
 
         uiGmapGoogleMapApi.then(function(maps) {
-            console.log('Maps loaded')
+
         });
 
-        $ctrl.getStations = function() {
+        $ctrl.getStations = function(location) {
             Server.execute({'getStations' : {
                 location: {
-                    latitude: 52.520008,
-                    longitude: 13.404954
+                    latitude: location.latitude,
+                    longitude: location.longitude
                 },
                 radius: 1.5,
                 type: 'all',
                 sort: 'dist'
-            }}).then(function(stations) {
-                console.log(stations.data)
+            }}).then(function(response) {
+                $ctrl.stations = [];
+                //  transform response.data for maps directive
+                for(let i= 0; i< response.data.stations.length; i++) {
+                    let station = response.data.stations[i];
+                    station.location = {};
+                    station.location.latitude = station.lat;
+                    station.location.longitude = station.lng;
+                    $ctrl.stations.push(station);
+                }
             })
         }
 

@@ -31,7 +31,7 @@
             //  Erzeugen der URL
             const url = Config.getStationsQueryUrl(params);
 
-
+            //  Get request an TankerAPI
            https.get(url, function(response) {
                 let data = [];
                 response.on('data', function(chunk) {
@@ -39,10 +39,10 @@
                 });
                 response.on('end', function() {
                     let result = JSON.parse(data.join(''));
+                    //  send data to frontend here
                     callback(
-                        null,
-                        //parse data to send to frontend here
-                        result
+                        null,   // possible error
+                        result  
                     )
                 });
             });
