@@ -4,9 +4,6 @@
 *
 */
 
-
-(function() {
-    
     'use strict';
 
     let application = angular.module('application', [ 'ui.router', 'uiGmapgoogle-maps']);
@@ -26,6 +23,8 @@
         });
     });
 
-}());
+
+
+
 
     

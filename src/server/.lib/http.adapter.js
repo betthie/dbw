@@ -26,16 +26,15 @@ function publishServices(urlPath, formats, config) {
         openHttpChannels[config.port] = true;
     }
     server.post(urlPath, function(req, res) {
-        bocl.execute(req.body, function(err, result) {
+        application.execute(req.body, function(err, result) {
             if (err) {
-                res.json(bocl.handleException(err));
+                res.json(application.handleException(err));
             }
             else {
                 res.json(result);
             }
         });
     });
-    console.log('Services erreichbar unter ' + urlPath);
 }
 
 /**

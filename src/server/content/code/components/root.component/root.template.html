@@ -1,9 +1,7 @@
 
 <h3>My Google Maps Demo</h3>
+<button ng-click="$ctrl.getStations()"></button>
 <div id="map"></div>
-{{$ctrl.map.center}}
-{{$ctrl.options}}
-
 <ui-gmap-google-map center="$ctrl.map.centre" options="$ctrl.options" zoom="$ctrl.map.zoom"></ui-gmap-google-map>
 
 <ui-view></ui-view>

@@ -21,7 +21,7 @@ function Server($http, $q, $location) {
     function execute(requests) {
         return $http(
             {
-                url: 'http://' + rootUrl + '/',
+                url: '/',
                 method: 'POST',
                 data: requests
             });

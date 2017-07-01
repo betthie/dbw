@@ -16,9 +16,9 @@
         });
 
 
-    RootCtrl.$inject = [ '$scope', 'uiGmapGoogleMapApi'];
+    RootCtrl.$inject = [ '$scope', 'uiGmapGoogleMapApi', 'Server'];
 
-    function RootCtrl($scope, uiGmapGoogleMapApi) {
+    function RootCtrl($scope, uiGmapGoogleMapApi, Server) {
         "use strict";
         let $ctrl = this;
 
@@ -39,6 +39,19 @@
             console.log('Maps loaded')
         });
 
+        $ctrl.getStations = function() {
+            Server.execute({'getStations' : {
+                location: {
+                    latitude: 52.520008,
+                    longitude: 13.404954
+                },
+                radius: 1.5,
+                type: 'all',
+                sort: 'dist'
+            }}).then(function(stations) {
+
+            })
+        }
 
     }
 }());

@@ -55,13 +55,13 @@ function addServices(dir, prefix) {
         }
     }
 
-    // wird aufgerufen, wenn eine Service-Datei gelöscht wird
+    //  Wird aufgerufen, wenn eine Service-Datei gelöscht wird
     function deleteService (file) {
         delete require.cache[require.resolve(file)];
     }
 
-    // Überwachung starten
-    // add feuert auch, wenn die Datei schon existiert aber chokidar diese das erste mal findet
+    //  Überwachung starten
+    //  add feuert auch, wenn die Datei schon existiert aber chokidar diese das erste mal findet
     chokidar.watch(path.join(dir, '**', '*.service.js'), {
         ignored: /[\/\\]\./, persistent: true, recursive: true
     })

@@ -6,20 +6,35 @@
 (function() {
     'use strict';
 
+    const https = require('https');
     const Stations = require('../models/snapshot.model');
+    const Config = require('../config');
 
     module.exports = {
 
-        /*  sendet Tankstationen anhand von Location und Radius
+        /*  holt Tankstationen von TankerkoenigApi
          *  @param {object} request
          *       .location
          *       .radius
-         *       .date
+         *
          */
         execute: function(request, callback) {
+            //  Parameter für request an tankerkönig api
+            let params = {};
+            params.latitude = request.location.lat;
+            params.longitude = request.location.lng;
+            params.radius = request.radius;
+            params.API_key = Config.getTankerkoenigAPIkey();
+            params.sort = request.sort;
+            params.type = request.type;
 
-            // http request an tankerkönig api
-            //
+            //  Erzeugen der URL
+            const url = Config.getStationsQueryUrl(params);
+            console.log(url);
+            https.get(url, function(response) {
+                //console.log(response)
+            });
+
             callback(
                 null,
                 //parse data to send to frontend here
