@@ -23,7 +23,6 @@ module.exports = {
     *   @todo sortierung und kraftstoff einbauen mit path.join
     */
     getStationsQueryUrl: function(params) {
-        console.log(params);
         return configValues.tankerkoenig.getStationsUrl + 'lat=' + params.latitude + '&lng=' + params.longitude +
                 '&rad=' + params.radius + '&sort=' + params.sort + '&type=' + params.type + '&apikey=' + params.API_key
     },

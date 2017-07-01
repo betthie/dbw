@@ -49,7 +49,7 @@
                 type: 'all',
                 sort: 'dist'
             }}).then(function(stations) {
-
+                console.log(stations.data)
             })
         }
 

@@ -21,8 +21,8 @@
         execute: function(request, callback) {
             //  Parameter für request an tankerkönig api
             let params = {};
-            params.latitude = request.location.lat;
-            params.longitude = request.location.lng;
+            params.latitude = request.location.latitude;
+            params.longitude = request.location.longitude;
             params.radius = request.radius;
             params.API_key = Config.getTankerkoenigAPIkey();
             params.sort = request.sort;
@@ -30,16 +30,24 @@
 
             //  Erzeugen der URL
             const url = Config.getStationsQueryUrl(params);
-            console.log(url);
-            https.get(url, function(response) {
-                //console.log(response)
+
+
+           https.get(url, function(response) {
+                let data = [];
+                response.on('data', function(chunk) {
+                    data.push(chunk);
+                });
+                response.on('end', function() {
+                    let result = JSON.parse(data.join(''));
+                    callback(
+                        null,
+                        //parse data to send to frontend here
+                        result
+                    )
+                });
             });
 
-            callback(
-                null,
-                //parse data to send to frontend here
-                null
-            )
+
         }
     }
 
