@@ -34,46 +34,36 @@
                 scrollwheel: false
             },
             events: {
-                click: function(map, eventName, originalEventArgs) {
+                click: function(map, eventName, eventArgs) {
                     //  get location of click event
-                    let e = originalEventArgs[0];
+                    let e = eventArgs[0];
                     let location = {
                         latitude: e.latLng.lat(),
                         longitude: e.latLng.lng()
                     };
-                    $ctrl.getStations(location)
+                    //  request stations from server
+                    Server.execute({
+                        'getStations': {
+                            location: location,
+                            radius: 1.5,
+                            type: 'all',
+                            sort: 'dist'
+                        }
+                    }).then(function (response) {
+                        $ctrl.stations = [];
+                        //  transform response.data into valid format for maps directive
+                        for (let i = 0; i < response.data.stations.length; i++) {
+                            let station = response.data.stations[i];
+                            station.location = {};
+                            station.location.latitude = station.lat;
+                            station.location.longitude = station.lng;
+                            $ctrl.stations.push(station);
+                        }
+                    })
 
                 }
             }
         };
-
-
-        uiGmapGoogleMapApi.then(function(maps) {
-
-        });
-
-        $ctrl.getStations = function(location) {
-            Server.execute({'getStations' : {
-                location: {
-                    latitude: location.latitude,
-                    longitude: location.longitude
-                },
-                radius: 1.5,
-                type: 'all',
-                sort: 'dist'
-            }}).then(function(response) {
-                $ctrl.stations = [];
-                //  transform response.data for maps directive
-                for(let i= 0; i< response.data.stations.length; i++) {
-                    let station = response.data.stations[i];
-                    station.location = {};
-                    station.location.latitude = station.lat;
-                    station.location.longitude = station.lng;
-                    $ctrl.stations.push(station);
-                }
-            })
-        }
-
     }
 }());
 
