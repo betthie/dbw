@@ -8,7 +8,9 @@
   },
   "tankerkoenig": {
     "API_key": "78e07e9a-6470-0f93-aa45-c87978e3756e",
-    "getStationsUrl": "https://creativecommons.tankerkoenig.de/json/list.php?"
+    "getStationsUrl": "https://creativecommons.tankerkoenig.de/json/list.php?",
+    "getPricesUrl": "https://creativecommons.tankerkoenig.de/json/prices.php?",
+    "getStationDetailsUrl": "https://creativecommons.tankerkoenig.de/json/detail.php?"
   }
 
 }

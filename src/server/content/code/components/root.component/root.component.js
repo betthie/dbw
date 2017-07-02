@@ -22,6 +22,7 @@
         "use strict";
         let $ctrl = this;
         $ctrl.stations = [];
+        $ctrl.selectedStation = {};
 
         //  initial map
         $ctrl.map = {
@@ -51,9 +52,10 @@
                         }
                     }).then(function (response) {
                         $ctrl.stations = [];
+                        console.log(response)
                         //  transform response.data into valid format for maps directive
-                        for (let i = 0; i < response.data.stations.length; i++) {
-                            let station = response.data.stations[i];
+                        for (let i = 0; i < response.data.length; i++) {
+                            let station = response.data[i];
                             station.location = {};
                             station.location.latitude = station.lat;
                             station.location.longitude = station.lng;
@@ -61,6 +63,12 @@
                         }
                     })
 
+                }
+            },
+            markerEvents: {
+                click: function(marker, eventName, model) {
+                    //  fills details of station.directive with information of clicked model
+                    $ctrl.selectedStation = model;
                 }
             }
         };

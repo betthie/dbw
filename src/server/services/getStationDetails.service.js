@@ -1,6 +1,11 @@
 /**
+ * Created by Willi on 02.07.2017.
+ */
+
+
+/**
  * Created by Willi on 21.06.2017.
- * @description - implements service to return price trend of a given gas station
+ * @description - implements service to return station details of a given gas station
  */
 
 
@@ -14,13 +19,13 @@
 
         /*  @description - returns price trend of a given gas station
          *  @param {object} request
-         *      .stationId
+         *      .stationId || [array of stationIds]
          *
          */
         execute: function (request, callback) {
             //  send request to TankerkoenigAPI for prices of given stationId
-            const url = Config.getPricesQueryUrl(request.stationId);
-            console.log(url);
+            const url = Config.getStationDetailsQueryUrl(request.stationId);
+
 
             https.get(url, function(response) {
                 let data = [];

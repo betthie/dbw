@@ -12,22 +12,30 @@ module.exports = {
             configValues.password + '@ds133932.mlab.com:33932/dbw_project'
     },
 
-    getTankerkoenigAPIkey: function() {
-        return configValues.tankerkoenig.API_key
-    },
 
     /*
     *   @author - willi.linke
     *   @dreturns {string}
-    *   @description creates url string for gas stations query
+    *   @description creates url strings for TankerkoenigAPI
     *   @todo sortierung und kraftstoff einbauen mit path.join
     */
     getStationsQueryUrl: function(params) {
-        return configValues.tankerkoenig.getStationsUrl + 'lat=' + params.latitude + '&lng=' + params.longitude +
-                '&rad=' + params.radius + '&sort=' + params.sort + '&type=' + params.type + '&apikey=' + params.API_key
+        const API_key = configValues.tankerkoenig.API_key;
+        return configValues.tankerkoenig.getStationsUrl + 'lat=' + params.location.latitude + '&lng=' + params.location.longitude +
+                '&rad=' + params.radius + '&sort=' + params.sort + '&type=' + params.type + '&apikey=' + API_key
     },
 
-    getGoogleAPIkey: function() {
-        return configValues.google.API_key
+    getPricesQueryUrl: function(stationId) {
+        const API_key = configValues.tankerkoenig.API_key;
+        return configValues.tankerkoenig.getPricesUrl + 'ids=' + stationId + '&apikey=' + API_key
+    },
+
+    getStationDetailsQueryUrl: function(params) {
+        const API_key = configValues.tankerkoenig.API_key;
+        //  params either one station or an id
+        let query = 'id=';
+        params.id ? query += params.id : query += params;
+
+        return configValues.tankerkoenig.getStationDetailsUrl + query + '&apikey=' + API_key
     }
 };

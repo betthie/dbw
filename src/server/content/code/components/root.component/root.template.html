@@ -1,8 +1,9 @@
 
 <h3>My Google Maps Demo</h3>
 <div id="map"></div>
+<station ng-repeat="station in $ctrl.stations" ng-if="station.id === $ctrl.selectedStation.id"></station>
 <ui-gmap-google-map center="$ctrl.map.centre" options="$ctrl.options" zoom="$ctrl.map.zoom" events="$ctrl.map.events">
-    <ui-gmap-markers models="$ctrl.stations" coords="'location'" icon="'icon'">
+    <ui-gmap-markers models="$ctrl.stations" coords="'location'" icon="'icon'" events="$ctrl.map.markerEvents">
 
     </ui-gmap-markers>
 </ui-gmap-google-map>
