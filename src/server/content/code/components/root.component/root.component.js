@@ -62,7 +62,6 @@
                             $ctrl.stations.push(station);
                         }
                     })
-
                 }
             },
             markerEvents: {

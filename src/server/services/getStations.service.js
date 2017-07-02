@@ -22,7 +22,6 @@
          *       .type
          */
         execute: function(request, callback) {
-
             //  Erzeugen der URL
             let url = Config.getStationsQueryUrl(request);
 
@@ -34,27 +33,28 @@
                 });
                 //  use async to load details of all stations
                 response.on('end', function () {
-                    let result = JSON.parse(stations.join(''));
+                    let result = JSON.parse(stations);
                     let serverResponse = [];
                     let tasks = [];
                     for (let i = 0; i < result.stations.length; i++) {
                         let station = result.stations[i];
                         let task = function(callback) {
-                            https.get(Config.getStationDetailsQueryUrl(station), function(response) {
+                            console.log(Config.getStationDetailsQueryUrl(station));
+                            https.get(Config.getStationDetailsQueryUrl(station), function(res) {
                                 let data = [];
-                                response.on('data', function(chunk) {
+                                res.on('data', function(chunk) {
                                     data.push(chunk);
                                 });
-                                response.on('end', function() {
-                                    let result = JSON.parse(data.join(''));
-                                    serverResponse.push(result.station);
+                                res.on('end', function() {
+                                    let details = JSON.parse(data);
+                                    serverResponse.push(details.station);
                                     callback();
                                 })
-
                             });
                         };
                         tasks.push(task);
                     }
+
                     async.parallel(tasks, function(err) {
                         if (err) throw err;
                         callback(
@@ -62,7 +62,6 @@
                             serverResponse
                         )
                     })
-
                 });
             });
 

@@ -19,8 +19,9 @@
          */
         execute: function (request, callback) {
             //  send request to TankerkoenigAPI for prices of given stationId
+            /*
             const url = Config.getPricesQueryUrl(request.stationId);
-            console.log(url);
+
 
             https.get(url, function(response) {
                 let data = [];
@@ -36,6 +37,8 @@
                     )
                 });
             });
+
+            */
 
         }
     }
