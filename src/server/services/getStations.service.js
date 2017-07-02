@@ -10,6 +10,7 @@
     const async = require('async');
     const Config = require('../config');
     const Stations = require('../models/snapshot.model');
+    const getStationDetailsService = require('./getStationDetails.service');
 
 
     module.exports = {
@@ -36,25 +37,19 @@
                     let result = JSON.parse(stations);
                     let serverResponse = [];
                     let tasks = [];
+                    // get this done by getStationDetails.service
                     for (let i = 0; i < result.stations.length; i++) {
                         let station = result.stations[i];
-                        let task = function(callback) {
-                            console.log(Config.getStationDetailsQueryUrl(station));
-                            https.get(Config.getStationDetailsQueryUrl(station), function(res) {
-                                let data = [];
-                                res.on('data', function(chunk) {
-                                    data.push(chunk);
-                                });
-                                res.on('end', function() {
-                                    let details = JSON.parse(data);
-                                    serverResponse.push(details.station);
-                                    callback();
-                                })
+                        //  uses service to get StationDetails
+                        let task =  function(callback) {
+                            getStationDetailsService.execute(station, function(err, res) {
+                                serverResponse.push(res.station);
+                                callback();
                             });
                         };
                         tasks.push(task);
                     }
-
+                    //  wait until all promises are finished
                     async.parallel(tasks, function(err) {
                         if (err) throw err;
                         callback(
