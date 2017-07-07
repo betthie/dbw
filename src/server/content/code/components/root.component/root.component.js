@@ -52,7 +52,6 @@
                         }
                     }).then(function (response) {
                         $ctrl.stations = [];
-                        console.log(response)
                         //  transform response.data into valid format for maps directive
                         for (let i = 0; i < response.data.length; i++) {
                             let station = response.data[i];
@@ -71,6 +70,11 @@
                 }
             }
         };
+
+
+
+
+
     }
 }());
 

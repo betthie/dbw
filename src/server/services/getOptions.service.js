@@ -1,4 +1,7 @@
 /**
+ * Created by Willi on 08.07.2017.
+ */
+/**
  * Created by Willi on 21.06.2017.
  */
 
@@ -6,11 +9,9 @@
 (function() {
     'use strict';
 
-    const Snapshots = require('../models/snapshot.model');
-
     module.exports = {
         httpMethod: function() {
-            return 'POST'
+            return 'GET'
         },
 
         /*  creates a snapshot, based on chosen location and radius

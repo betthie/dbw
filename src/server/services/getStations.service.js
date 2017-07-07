@@ -14,7 +14,9 @@
 
 
     module.exports = {
-
+        httpMethod: function() {
+            return 'GET'
+        },
         /*  holt Tankstellen von TankerkoenigAPI
          *  @param {object} request
          *       .location

@@ -13,6 +13,7 @@ let exceptionHandler = function (err) {
 module.exports = {
     addServices: addServices,
     execute: execute,
+    getRepository: getRepository,
     onException: onException,
     handleException: handleException,
     http: require('./http.adapter.js')
@@ -127,4 +128,12 @@ function onException(callback) {
  */
 function handleException(err) {
     return exceptionHandler(err);
+}
+
+function getRepository() {
+    let data = {};
+    for(let service in repository){
+        data[service] = repository[service][0].httpMethod();
+    }
+    return data;
 }

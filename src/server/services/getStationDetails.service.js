@@ -16,6 +16,9 @@
     const Config = require('../config');
 
     module.exports = {
+        httpMethod: function() {
+            return 'GET'
+        },
 
         /*  @description - returns price trend of a given gas station
          *  @param {object} request

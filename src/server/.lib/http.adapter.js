@@ -35,6 +35,26 @@ function publishServices(urlPath, formats, config) {
             }
         });
     });
+
+    // sends
+    server.get('/repository', function(req, res) {
+        return res.json(application.getRepository())
+    });
+
+    /*
+    server.get(urlPath, function(req, res) {
+        application.execute(req.body, function(err, result) {
+            if (err) {
+                res.json(application.handleException(err));
+            }
+            else {
+                res.json(result);
+            }
+        });
+    });
+    */
+
+
 }
 
 /**
