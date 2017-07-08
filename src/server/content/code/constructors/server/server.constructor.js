@@ -48,6 +48,7 @@ function Server($http, $q, $location) {
                     url: '/repository',
                     method: 'GET',
                 }).then(function(repo) {
+                    console.log(repo.data);
                     that.repository = repo.data;
             }));
     }

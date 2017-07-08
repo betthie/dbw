@@ -13,7 +13,7 @@ let exceptionHandler = function (err) {
 module.exports = {
     addServices: addServices,
     execute: execute,
-    getRepository: getRepository,
+    sendRepository: sendRepository,
     onException: onException,
     handleException: handleException,
     http: require('./http.adapter.js')
@@ -91,15 +91,8 @@ function execute(input, callback) {
  * @param {*} callback
  */
 function executeRequest(req, callback) {
-    console.log(req);
     let requestName = Object.keys(req)[0];
-    console.log(requestName);
-    /*
-    console.log('requestname');
-    console.log(requestName);
     let parts = requestName.split('_');
-    console.log('parts');
-    console.log(parts);
     let executors = repository;
     for (let i=0; i< parts.length; i++) {
         let scope = parts[i];
@@ -119,7 +112,6 @@ function executeRequest(req, callback) {
             }
         }
     }
-    */
 }
 
 /**
@@ -138,10 +130,12 @@ function handleException(err) {
     return exceptionHandler(err);
 }
 
-function getRepository() {
+function sendRepository() {
     let data = {};
     for(let service in repository){
-        data[service] = repository[service][0].httpMethod();
+        data[service] = {};
+        data[service].method = repository[service][0].getHttpMethod();
+        data[service].parameters = repository[service][0].getParameters();
     }
     return data;
 }

@@ -10,10 +10,12 @@
     'use strict';
 
     module.exports = {
-        httpMethod: function() {
+        getHttpMethod: function() {
             return 'GET'
         },
-
+        getParameters: function() {
+            return []
+        },
         /*  creates a snapshot, based on chosen location and radius
          *  @param {object} request
          *       .location

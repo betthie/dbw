@@ -11,10 +11,12 @@
     const Config = require('../config');
 
     module.exports = {
-        httpMethod: function() {
+        getHttpMethod: function() {
             return 'GET'
         },
-
+        getParameters: function() {
+            return []
+        },
         /*  @description - returns price trend of a given gas station
          *  @param {object} request
          *      .stationId

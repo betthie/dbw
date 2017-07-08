@@ -9,8 +9,11 @@
     const Snapshots = require('../models/snapshot.model');
 
     module.exports = {
-        httpMethod: function() {
+        getHttpMethod: function() {
             return 'POST'
+        },
+        getParameters: function() {
+            return []
         },
 
         /*  creates a snapshot, based on chosen location and radius

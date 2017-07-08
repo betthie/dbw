@@ -38,17 +38,17 @@ function publishServices(urlPath, formats, config) {
 
     // sends
     server.get('/repository', function(req, res) {
-        return res.json(application.getRepository())
+        return res.json(application.sendRepository())
     });
 
 
     server.get('/services/:service/:params?', function(req, res) {
         let service = req.params.service;
         let params = req.query;
-        console.log(service);
-        console.log(params);
-        application.execute(req.body, function(err, result) {
-            console.log(req.body);
+        let data = {};
+        data[service] = params;
+        console.log(data);
+        application.execute(data, function(err, result) {
             if (err) {
                 res.json(application.handleException(err));
             }

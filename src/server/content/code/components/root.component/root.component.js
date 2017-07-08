@@ -49,8 +49,6 @@
                         type: 'all',
                         sort: 'dist'
                     }).then(function (response) {
-                        console.log(response);
-                        /*
 
                         $ctrl.stations = [];
                         //  transform response.data into valid format for maps directive
@@ -61,8 +59,6 @@
                             station.location.longitude = station.lng;
                             $ctrl.stations.push(station);
                         }
-
-                        */
                     })
                 }
             },

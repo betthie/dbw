@@ -14,12 +14,16 @@
 
 
     module.exports = {
-        httpMethod: function() {
+        getHttpMethod: function() {
             return 'GET'
+        },
+        getParameters: function() {
+            return ['latitude', 'longitude', 'radius', 'sort', 'type']
         },
         /*  holt Tankstellen von TankerkoenigAPI
          *  @param {object} request
-         *       .location
+         *       .latitude
+         *       .longitude
          *       .radius
          *       .sort
          *       .type

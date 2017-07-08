@@ -21,8 +21,8 @@ module.exports = {
     */
     getStationsQueryUrl: function(params) {
         const API_key = configValues.tankerkoenig.API_key;
-        return configValues.tankerkoenig.getStationsUrl + 'lat=' + params.location.latitude + '&lng=' + params.location.longitude +
-                '&rad=' + params.radius + '&sort=' + params.sort + '&type=' + params.type + '&apikey=' + API_key
+        return configValues.tankerkoenig.getStationsUrl + 'lat=' + params.lat + '&lng=' + params.long +
+                '&rad=' + params.rad + '&sort=' + params.sort + '&type=' + params.type + '&apikey=' + API_key
     },
 
     getPricesQueryUrl: function(stationId) {
