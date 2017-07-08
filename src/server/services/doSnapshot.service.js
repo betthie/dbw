@@ -6,7 +6,7 @@
 (function() {
     'use strict';
 
-    const Snapshots = require('../models/snapshot.model');
+    const Prices = require('../models/prices.model');
 
     module.exports = {
         getHttpMethod: function() {
@@ -16,16 +16,18 @@
             return []
         },
 
-        /*  creates a snapshot, based on chosen location and radius
-         *  @param {object} request
-         *       .location
-         *       .radius
-         *       .date
+        /*  creates a snapshot, based on array of stations
+         *  @param [array] stations
+         *
          */
-        execute: function(request, callback) {
+        execute: function(stations, callback) {
 
-            // http request an tankerkönig api
-            //
+            //  entry in database for every station and price per date
+            console.log('invoked');
+            console.log(stations);
+
+
+
             callback(
                 null,
                 //parse data to send to frontend here

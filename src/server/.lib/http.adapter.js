@@ -25,7 +25,7 @@ function publishServices(urlPath, formats, config) {
         server.listen(config.port);
         openHttpChannels[config.port] = true;
     }
-    server.post(urlPath, function(req, res) {
+    server.post('/services/:service', function(req, res) {
         application.execute(req.body, function(err, result) {
             if (err) {
                 res.json(application.handleException(err));
@@ -36,7 +36,6 @@ function publishServices(urlPath, formats, config) {
         });
     });
 
-    // sends
     server.get('/repository', function(req, res) {
         return res.json(application.sendRepository())
     });
@@ -47,7 +46,6 @@ function publishServices(urlPath, formats, config) {
         let params = req.query;
         let data = {};
         data[service] = params;
-        console.log(data);
         application.execute(data, function(err, result) {
             if (err) {
                 res.json(application.handleException(err));

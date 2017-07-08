@@ -9,7 +9,7 @@
     const https = require('https');
     const async = require('async');
     const Config = require('../config');
-    const Stations = require('../models/snapshot.model');
+    const Stations = require('../models/prices.model');
     const getStationDetailsService = require('./getStationDetails.service');
 
 

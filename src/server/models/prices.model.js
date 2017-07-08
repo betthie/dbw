@@ -8,7 +8,7 @@
 
     const mongoose = require('mongoose');
     const Schema = mongoose.Schema;
-    const snapshotSchema = new Schema({
+    const priceSchema = new Schema({
         _id: Number,
         date: Date,
         diesel: Number,
@@ -17,20 +17,20 @@
     });
 
     // implementing database logic to separate it from controller
-    snapshotSchema.statics.create = function(callback){
+    priceSchema.statics.create = function(callback){
         return this.model('Records').find({}, callback)
     };
 
-    snapshotSchema.statics.update = function (callback) {
+    priceSchema.statics.update = function (callback) {
 
     };
 
-    snapshotSchema.statics.delete = function (callback) {
+    priceSchema.statics.delete = function (callback) {
 
     };
 
-    let Snaphots = mongoose.model('Snaphots', snapshotSchema);
-    module.exports = Snaphots;
+    let Prices = mongoose.model('Prices', priceSchema);
+    module.exports = Prices;
 
 }());
 

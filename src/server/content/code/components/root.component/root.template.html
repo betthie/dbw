@@ -1,6 +1,7 @@
 
 <h3>My Google Maps Demo</h3>
 <div id="map"></div>
+<button ng-click="$ctrl.doSnapshot($ctrl.stations)">save prices</button>
 <station ng-repeat="station in $ctrl.stations" ng-if="station.id === $ctrl.selectedStation.id"></station>
 <ui-gmap-google-map center="$ctrl.map.centre" options="$ctrl.options" zoom="$ctrl.map.zoom" events="$ctrl.map.events">
     <ui-gmap-markers models="$ctrl.stations" coords="'location'" icon="'icon'" events="$ctrl.map.markerEvents">
