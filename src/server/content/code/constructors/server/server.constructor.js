@@ -1,7 +1,7 @@
 /*
-*
-*
-*/
+ *
+ *
+ */
 
 
 application.factory('Server', Server);
@@ -12,35 +12,33 @@ Server.$inject = ['$http', '$q', '$location'];
 function Server($http, $q, $location) {
     const that = this;
     const rootUrl = $location.host() + ($location.port() !== 8080 ? ':' + $location.port() : '');
-    this.repository = getRepository().then(function(rep) {
-        that.repository = rep.data
-    });
+    this.repository = getRepository();
 
 
     return {
         // führt einen oder mehrere Requests auf dem Server aus und gibt deren Ergebnis zurück
-        execute: execute
+        getStations: getStations
     };
 
     // Requests auf dem Server ausführen (JSON/HTTP)
     // Methoden GET und Post dynamisch verwenden
-    function execute(requests) {
+    function getStations(request) {
 
         /*
-        * send one or multiple requests
-        *
-        * */
-        if(that.repository[requests]) {
-            return $http(
-                {
-                    url: '/',
-                    method: 'POST',
-                    data: requests
-                });
-        } else {
-            console.log('Service not defined')
-        }
+         * send requests
+         *
+         */
+        let latitude = request.location.latitude;
+        let longitude = request.location.longitude;
+        let radius = request.radius;
+        let type = request.type;
+        let sort = request.sort;
 
+
+        return $q.resolve($http.get('/services/getStations/?lat=' + latitude + '&long=' + longitude + '&rad=' +
+            radius + '&type=' + type + '&sort=' + sort).then(function (res) {
+           return res
+        }));
     }
 
     function getRepository() {
@@ -49,6 +47,8 @@ function Server($http, $q, $location) {
                 {
                     url: '/repository',
                     method: 'GET',
-                }));
+                }).then(function(repo) {
+                    that.repository = repo.data;
+            }));
     }
 }

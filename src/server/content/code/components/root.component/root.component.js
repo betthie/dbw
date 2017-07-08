@@ -43,14 +43,15 @@
                         longitude: e.latLng.lng()
                     };
                     //  request stations from server
-                    Server.execute({
-                        'getStations': {
-                            location: location,
-                            radius: 1.5,
-                            type: 'all',
-                            sort: 'dist'
-                        }
+                    Server.getStations({
+                        location: location,
+                        radius: 1.5,
+                        type: 'all',
+                        sort: 'dist'
                     }).then(function (response) {
+                        console.log(response);
+                        /*
+
                         $ctrl.stations = [];
                         //  transform response.data into valid format for maps directive
                         for (let i = 0; i < response.data.length; i++) {
@@ -60,6 +61,8 @@
                             station.location.longitude = station.lng;
                             $ctrl.stations.push(station);
                         }
+
+                        */
                     })
                 }
             },

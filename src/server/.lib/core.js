@@ -91,8 +91,15 @@ function execute(input, callback) {
  * @param {*} callback
  */
 function executeRequest(req, callback) {
+    console.log(req);
     let requestName = Object.keys(req)[0];
+    console.log(requestName);
+    /*
+    console.log('requestname');
+    console.log(requestName);
     let parts = requestName.split('_');
+    console.log('parts');
+    console.log(parts);
     let executors = repository;
     for (let i=0; i< parts.length; i++) {
         let scope = parts[i];
@@ -112,6 +119,7 @@ function executeRequest(req, callback) {
             }
         }
     }
+    */
 }
 
 /**

@@ -41,9 +41,14 @@ function publishServices(urlPath, formats, config) {
         return res.json(application.getRepository())
     });
 
-    /*
-    server.get(urlPath, function(req, res) {
+
+    server.get('/services/:service/:params?', function(req, res) {
+        let service = req.params.service;
+        let params = req.query;
+        console.log(service);
+        console.log(params);
         application.execute(req.body, function(err, result) {
+            console.log(req.body);
             if (err) {
                 res.json(application.handleException(err));
             }
@@ -52,15 +57,13 @@ function publishServices(urlPath, formats, config) {
             }
         });
     });
-    */
-
 
 }
 
 /**
  * Stellt die Dateien im Verzeichnis dir unter dem URL-Pfad urlPath zur Verfügung
  * @param {string} dir Verzeichnis
- * @param {string} urlPath urlPath URL (ohne Host) unterhalb dessen die Dateien von 'dir' per HTTP-GET abrufbar sein sollen
+ * @param {string} urlPath  URL (ohne Host) unterhalb dessen die Dateien von 'dir' per HTTP-GET abrufbar sein sollen
  */
 function publishFiles(dir, urlPath) {
     if (urlPath) {
