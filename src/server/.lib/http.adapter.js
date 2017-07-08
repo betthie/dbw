@@ -25,6 +25,7 @@ function publishServices(urlPath, formats, config) {
         server.listen(config.port);
         openHttpChannels[config.port] = true;
     }
+
     server.post('/services/:service', function(req, res) {
         application.execute(req.body, function(err, result) {
             if (err) {

@@ -51,9 +51,11 @@ function Server($http, $q, $location) {
      *
      */
     function doSnapshot(request) {
-        let data = {};
-        data['doSnapshot'] = request;
-        return $q.resolve($http.post('/services/doSnapshot', data));
+        if(request.length) {
+            let data = {};
+            data['doSnapshot'] = request;
+            return $q.resolve($http.post('/services/doSnapshot', data));
+        }
     }
 
     function getRepository() {

@@ -71,9 +71,7 @@
         };
 
         $ctrl.doSnapshot = function(stations) {
-            Server.doSnapshot(stations).then(function() {
-
-            })
+            Server.doSnapshot(stations)
         };
 
 

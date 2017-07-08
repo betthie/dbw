@@ -7,6 +7,7 @@
     'use strict';
 
     const Prices = require('../models/prices.model');
+    const Stations = require('../models/station.model');
 
     module.exports = {
         getHttpMethod: function() {
@@ -23,10 +24,11 @@
         execute: function(stations, callback) {
 
             //  entry in database for every station and price per date
-            console.log('invoked');
-            console.log(stations);
-
-
+            for(let i= 0; i < stations.length; i++) {
+                let station = Stations.createStation(stations[i]);
+                Stations.saveStation(station, function(err, record) {
+                })
+            }
 
             callback(
                 null,

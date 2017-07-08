@@ -3,6 +3,10 @@ let path = require('path');
 let chokidar = require('chokidar');
 let async = require('async');
 let _ = require('lodash');
+let mongoose = require('mongoose');
+let config = require('../config');
+
+
 
 let repository = {};
 let exceptionHandler = function (err) {
@@ -18,6 +22,10 @@ module.exports = {
     handleException: handleException,
     http: require('./http.adapter.js')
 };
+
+// create database connection
+console.log(config.getDbConnectionString());
+mongoose.connect(config.getDbConnectionString());
 
 /**
  * Verzeichnis 'dir' rekursiv nach Service-Implementierungen durchsuchen, diese dem Repository hinzufügen

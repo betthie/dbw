@@ -8,8 +8,8 @@ const configValues = require('./config');
 module.exports = {
 
     getDbConnectionString: function() {
-        return 'mongodb://'+ configValues.username + ':' +
-            configValues.password + '@ds133932.mlab.com:33932/dbw_project'
+        return 'mongodb://'+ configValues.database.username + ':' +
+            configValues.database.password + '@ds133932.mlab.com:33932/dbw_project'
     },
 
 
