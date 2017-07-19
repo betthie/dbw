@@ -24,10 +24,10 @@
          *
          */
         execute: function (request, callback) {
-
+            console.log(request);
             //  pulls all prices from db
             let prices = Snapshots.get({ stationId: request.stationId}, function(err, prices) {
-                //console.log(prices);
+                console.log(prices);
                 return prices
             });
 

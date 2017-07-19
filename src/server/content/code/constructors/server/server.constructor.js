@@ -61,7 +61,7 @@ function Server($http, $q, $location) {
 
 
     function getPriceTrend(stationId) {
-        return $q.resolve($http.get('/services/getPriceTrend').then(function(res) {
+        return $q.resolve($http.get('/services/getPriceTrend/?stationId=' + stationId).then(function(res) {
             return res
         }))
     }
@@ -73,7 +73,6 @@ function Server($http, $q, $location) {
                     url: '/repository',
                     method: 'GET',
                 }).then(function(repo) {
-                    console.log(repo.data);
                     that.repository = repo.data;
             }));
     }
