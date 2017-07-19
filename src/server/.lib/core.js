@@ -24,7 +24,6 @@ module.exports = {
 };
 
 // create database connection
-console.log(config.getDbConnectionString());
 mongoose.connect(config.getDbConnectionString());
 
 /**

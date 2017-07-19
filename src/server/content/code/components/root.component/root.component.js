@@ -2,40 +2,39 @@
  * Created by willi.linke on 30.06.2017
  * */
 
-(function() {
+(function () {
     "use strict";
 
     angular.module('application')
         .component('root', {
             templateUrl: 'code/components/root.component/root.template.html',
             controller: RootCtrl,
-            bindings: {
-
-            }
+            bindings: {}
 
         });
 
 
-    RootCtrl.$inject = [ '$scope', 'uiGmapGoogleMapApi', 'Server'];
+    RootCtrl.$inject = ['$scope', 'uiGmapGoogleMapApi', 'Server'];
 
     function RootCtrl($scope, uiGmapGoogleMapApi, Server) {
         "use strict";
         let $ctrl = this;
         $ctrl.stations = [];
         $ctrl.selectedStation = {};
+        $ctrl.radius = 1.5;
 
         //  initial map
         $ctrl.map = {
-            centre:   {
+            centre: {
                 latitude: 52.520008,
                 longitude: 13.404954
             },
-            zoom: 10 ,
-            options : {
+            zoom: 10,
+            options: {
                 scrollwheel: false
             },
             events: {
-                click: function(map, eventName, eventArgs) {
+                click: function (map, eventName, eventArgs) {
                     //  get location of click event
                     let e = eventArgs[0];
                     let location = {
@@ -45,7 +44,7 @@
                     //  request stations from server
                     Server.getStations({
                         location: location,
-                        radius: 1.5,
+                        radius: $ctrl.radius,
                         type: 'all',
                         sort: 'dist'
                     }).then(function (response) {
@@ -63,19 +62,47 @@
                 }
             },
             markerEvents: {
-                click: function(marker, eventName, model) {
+                click: function (marker, eventName, model) {
                     //  fills details of station.directive with information of clicked model
                     $ctrl.selectedStation = model;
                 }
             }
         };
 
-        $ctrl.doSnapshot = function(stations) {
-            Server.doSnapshot(stations)
+        $ctrl.doSnapshot = function (stations) {
+            Server.doSnapshot(stations, function () {
+
+            })
         };
 
-
-
+        $ctrl.labels = ["January", "February", "March", "April", "May", "June", "July"];
+        $ctrl.series = ['Series A', 'Series B'];
+        $ctrl.data = [
+            [65, 59, 80, 81, 56, 55, 40],
+            [28, 48, 40, 19, 86, 27, 90]
+        ];
+        $ctrl.onClick = function (points, evt) {
+            console.log(points, evt);
+        };
+        $ctrl.datasetOverride = [{yAxisID: 'y-axis-1'}, {yAxisID: 'y-axis-2'}];
+        $ctrl.options = {
+            scales: {
+                yAxes: [
+                    {
+                        id: 'y-axis-1',
+                        type: 'linear',
+                        display: true,
+                        position: 'left'
+                    },
+                    {
+                        id: 'y-axis-2',
+                        type: 'linear',
+                        display: true,
+                        position: 'right'
+                    }
+                ]
+            }
+        };
 
 
     }

@@ -3,21 +3,21 @@
  */
 
 
-(function() {
+(function () {
     'use strict';
 
     const https = require('https');
     const async = require('async');
     const Config = require('../config');
-    const Stations = require('../models/prices.model');
+    const Stations = require('../models/snapshot.model.js');
     const getStationDetailsService = require('./getStationDetails.service');
 
 
     module.exports = {
-        getHttpMethod: function() {
+        getHttpMethod: function () {
             return 'GET'
         },
-        getParameters: function() {
+        getParameters: function () {
             return ['latitude', 'longitude', 'radius', 'sort', 'type']
         },
         /*  holt Tankstellen von TankerkoenigAPI
@@ -28,7 +28,7 @@
          *       .sort
          *       .type
          */
-        execute: function(request, callback) {
+        execute: function (request, callback) {
             //  Erzeugen der URL
             let url = Config.getStationsQueryUrl(request);
 
@@ -40,29 +40,37 @@
                 });
                 //  use async to load details of all stations
                 response.on('end', function () {
-                    let result = JSON.parse(stations);
-                    let serverResponse = [];
-                    let tasks = [];
-                    // get this done by getStationDetails.service
-                    for (let i = 0; i < result.stations.length; i++) {
-                        let station = result.stations[i];
-                        //  uses service to get StationDetails
-                        let task =  function(callback) {
-                            getStationDetailsService.execute(station, function(err, res) {
-                                serverResponse.push(res.station);
-                                callback();
-                            });
-                        };
-                        tasks.push(task);
+                    let result;
+                    try {
+                        result = JSON.parse(stations);
+
+                    } catch (err) {
+                        // throw "request limit exceeded"
+                        console.log('request limit exceeded')
                     }
-                    //  wait until all promises are finished
-                    async.parallel(tasks, function(err) {
-                        if (err) throw err;
-                        callback(
-                            null,
-                            serverResponse
-                        )
-                    })
+
+                    let serverResponse = [];
+                        let tasks = [];
+                        // get this done by getStationDetails.service
+                        for (let i = 0; i < result.stations.length; i++) {
+                            let station = result.stations[i];
+                            //  uses service to get StationDetails
+                            let task = function (callback) {
+                                getStationDetailsService.execute(station, function (err, res) {
+                                    serverResponse.push(res.station);
+                                    callback();
+                                });
+                            };
+                            tasks.push(task);
+                        }
+                        //  wait until all promises are finished
+                        async.parallel(tasks, function (err) {
+                            if (err) throw err;
+                            callback(
+                                null,
+                                serverResponse
+                            )
+                        })
                 });
             });
 

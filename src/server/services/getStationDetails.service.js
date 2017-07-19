@@ -9,17 +9,17 @@
  */
 
 
-(function() {
+(function () {
     'use strict';
 
     const https = require('https');
     const Config = require('../config');
 
     module.exports = {
-        getHttpMethod: function() {
+        getHttpMethod: function () {
             return 'GET'
         },
-        getParameters: function() {
+        getParameters: function () {
             return []
         },
 
@@ -33,14 +33,21 @@
 
             const url = Config.getStationDetailsQueryUrl(request.id);
 
-            https.get(url, function(response) {
+            https.get(url, function (response) {
                 let data = [];
-                response.on('data', function(chunk) {
+                response.on('data', function (chunk) {
                     data.push(chunk);
                 });
-                response.on('end', function() {
-                    let result = JSON.parse(data.join(''));
-                    //  send data to frontend here
+                response.on('end', function () {
+                    let result;
+                    try {
+                        //  send data to frontend here
+                        result = JSON.parse(data.join(''));
+
+                    } catch (err) {
+                        console.log(err);
+                        // throw "request limit exceeded"
+                    }
                     callback(
                         null,
                         result

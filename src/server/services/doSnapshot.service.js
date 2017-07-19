@@ -6,8 +6,9 @@
 (function() {
     'use strict';
 
-    const Prices = require('../models/prices.model');
+    const Snapshots = require('../models/snapshot.model.js');
     const Stations = require('../models/station.model');
+    const moment = require('moment');
 
     module.exports = {
         getHttpMethod: function() {
@@ -22,17 +23,25 @@
          *
          */
         execute: function(stations, callback) {
-
+            //  create date
+            console.log(stations);
+            let date = (function() {
+                let dt = new Date;
+                return dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate();
+            }());
             //  entry in database for every station and price per date
             for(let i= 0; i < stations.length; i++) {
-                let station = Stations.createStation(stations[i]);
-                Stations.saveStation(station, function(err, record) {
+                let station = Stations.create(stations[i]);
+                Stations.save(station, function(err, result) {
+                    //  create snapshot
+                    let snapshot = Snapshots.create(stations[i], date);
+                    Snapshots.save(snapshot, function(err, result) {
+
+                    })
                 })
             }
-
             callback(
                 null,
-                //parse data to send to frontend here
                 null
             )
         }

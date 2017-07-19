@@ -21,8 +21,8 @@
     // separate database logic from controller
 
 
-    stationSchema.statics.createStation = function (station) {
-        let newStation = new this(); // <- Fetch  model "on the fly"
+    stationSchema.statics.create = function (station) {
+        let newStation = new this(); // <- fetch  model
         newStation._id = station.id;
         newStation.name = station.name;
         newStation.brand = station.brand;
@@ -35,8 +35,7 @@
 
 
     // save station
-    stationSchema.statics.saveStation = function(station, callback){
-        console.log(station);
+    stationSchema.statics.save = function(station, callback){
         let query = {_id: station.id};
         let update = {
             _id: station._id,

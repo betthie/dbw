@@ -1,27 +1,42 @@
 /*
-*   @author - willi.linke
-*   @description - app.js sets up config and routing for the templates of the application
-*
-*/
+ *   @author - willi.linke
+ *   @description - app.js sets up config and routing for the templates of the application
+ *
+ */
 
-    'use strict';
+'use strict';
 
-    let application = angular.module('application', [ 'ui.router', 'uiGmapgoogle-maps']);
+let application = angular.module('application', ['chart.js', 'ui.router', 'uiGmapgoogle-maps']);
 
-    application.config(function($stateProvider,uiGmapGoogleMapApiProvider){
+application.config(function ($stateProvider, uiGmapGoogleMapApiProvider) {
 
-        $stateProvider
-            .state('root', {
-                url: '/',
-                component: 'root'
-            })
+    $stateProvider
+        .state('root', {
+            url: '/',
+            component: 'root'
+        })
 
-        uiGmapGoogleMapApiProvider.configure({
-            key: 'AIzaSyCbEhNnFhkwWoFFeAZUrwzVDf7TcWk4coI',
-            v: '3.17',
-            libraries: 'weather,geometry,visualization'
-        });
+    uiGmapGoogleMapApiProvider.configure({
+        key: 'AIzaSyCbEhNnFhkwWoFFeAZUrwzVDf7TcWk4coI',
+        v: '3.17',
+        libraries: 'weather,geometry,visualization'
     });
+});
+
+application.config(['ChartJsProvider', function (ChartJsProvider) {
+    // Configure all charts
+    ChartJsProvider.setOptions({
+        chartColors: ['#FF5252', '#FF8A80'],
+        responsive: false
+    });
+    // Configure all line charts
+    ChartJsProvider.setOptions('line', {
+        showLines: false
+    });
+}]);
+
+
+
 
 
 
