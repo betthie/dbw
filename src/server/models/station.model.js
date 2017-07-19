@@ -36,7 +36,7 @@
 
     // save station
     stationSchema.statics.save = function(station, callback){
-        let query = {_id: station.id};
+        let query = {_id: station._id};
         let update = {
             _id: station._id,
             name: station.name,

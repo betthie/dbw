@@ -9,6 +9,7 @@
 
     const https = require('https');
     const Config = require('../config');
+    const Snapshots = require('../models/snapshot.model');
 
     module.exports = {
         getHttpMethod: function() {
@@ -23,11 +24,15 @@
          *
          */
         execute: function (request, callback) {
-            //  send request to TankerkoenigAPI for prices of given stationId
+
+            //  pulls all prices from db
+            let prices = Snapshots.get({ stationId: request.stationId}, function(err, prices) {
+                //console.log(prices);
+                return prices
+            });
+
+
             /*
-            const url = Config.getPricesQueryUrl(request.stationId);
-
-
             https.get(url, function(response) {
                 let data = [];
                 response.on('data', function(chunk) {

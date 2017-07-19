@@ -10,7 +10,7 @@
     const async = require('async');
     const Config = require('../config');
     const Stations = require('../models/snapshot.model.js');
-    const getStationDetailsService = require('./getStationDetails.service');
+    const getStationDetails = require('./getStationDetails.service');
 
 
     module.exports = {
@@ -56,7 +56,7 @@
                             let station = result.stations[i];
                             //  uses service to get StationDetails
                             let task = function (callback) {
-                                getStationDetailsService.execute(station, function (err, res) {
+                                getStationDetails.execute(station, function (err, res) {
                                     serverResponse.push(res.station);
                                     callback();
                                 });

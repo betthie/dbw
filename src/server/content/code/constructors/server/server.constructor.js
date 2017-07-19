@@ -18,6 +18,7 @@ function Server($http, $q, $location) {
     return {
         // führt einen oder mehrere Requests auf dem Server aus und gibt deren Ergebnis zurück
         getStations: getStations,
+        getPriceTrend: getPriceTrend,
         doSnapshot: doSnapshot
     };
 
@@ -56,6 +57,13 @@ function Server($http, $q, $location) {
             data['doSnapshot'] = request;
             return $q.resolve($http.post('/services/doSnapshot', data));
         }
+    }
+
+
+    function getPriceTrend(stationId) {
+        return $q.resolve($http.get('/services/getPriceTrend').then(function(res) {
+            return res
+        }))
     }
 
     function getRepository() {

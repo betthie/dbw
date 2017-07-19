@@ -65,6 +65,7 @@
                 click: function (marker, eventName, model) {
                     //  fills details of station.directive with information of clicked model
                     $ctrl.selectedStation = model;
+                    Server.getPriceTrend(model.id);
                 }
             }
         };

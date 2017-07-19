@@ -23,8 +23,8 @@
          *
          */
         execute: function(stations, callback) {
-            //  create date
             console.log(stations);
+            //  create date
             let date = (function() {
                 let dt = new Date;
                 return dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate();

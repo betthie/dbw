@@ -20,7 +20,7 @@
     snapshotSchema.statics.create = function (station, date) {
         let newSnapshot = new this(); // <- fetch  model
         newSnapshot.date = date;
-        newSnapshot.stationId = station.id;
+        newSnapshot.stationId = String(station.id);
         newSnapshot.diesel = station.diesel;
         newSnapshot.e5 = station.e5;
         newSnapshot.e10 = station.e10;
@@ -32,7 +32,7 @@
     snapshotSchema.statics.save = function (snapshot, callback) {
         let query = {date: snapshot.date, stationId: snapshot.stationId};
         let update = {
-            stationId: snapshot.id,
+            stationId: snapshot.stationId,
             diesel: snapshot.diesel,
             e5: snapshot.e5,
             e10: snapshot.e10
