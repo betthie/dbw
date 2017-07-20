@@ -26,7 +26,7 @@ application.config(function ($stateProvider, uiGmapGoogleMapApiProvider) {
 application.config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
-        chartColors: ['#FF5252', '#FF8A80'],
+        chartColors: ['#c400bb', '#00c999'],
         responsive: false
     });
     // Configure all line charts

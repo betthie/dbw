@@ -24,31 +24,32 @@
          *
          */
         execute: function (request, callback) {
-            console.log(request);
+
             //  pulls all prices from db
-            let prices = Snapshots.get({ stationId: request.stationId}, function(err, prices) {
-                console.log(prices);
-                return prices
+            Snapshots.get({ stationId: request.stationId}, function(err, prices) {
+                if (err) throw err;
+                let trend = {};
+                trend.e10 = [];
+                trend.e5 = [];
+                trend.diesel = [];
+                trend.dates = [];
+
+                prices.map(function(price) {
+                    trend.e10.push(price.e10);
+                    trend.e5.push(price.e5);
+                    trend.diesel.push(price.diesel);
+                    trend.dates.push(price.date)
+                });
+
+                console.log(trend);
+
+                callback (
+                    err,
+                    trend
+                )
             });
 
 
-            /*
-            https.get(url, function(response) {
-                let data = [];
-                response.on('data', function(chunk) {
-                    data.push(chunk);
-                });
-                response.on('end', function() {
-                    let result = JSON.parse(data.join(''));
-                    //  send data to frontend here
-                    callback(
-                        null,
-                        result
-                    )
-                });
-            });
-
-            */
 
         }
     }

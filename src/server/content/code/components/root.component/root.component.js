@@ -23,6 +23,28 @@
         $ctrl.selectedStation = {};
         $ctrl.radius = 1.5;
 
+
+        //  config for price chart
+        $ctrl.data = [];
+        $ctrl.labels = [];
+        $ctrl.series = ['E5', 'E10', 'Diesel'];
+        $ctrl.onClick = function (points, evt) {
+            console.log(points, evt);
+        };
+        $ctrl.datasetOverride = [{yAxisID: 'y-axis-1'}];
+        $ctrl.options = {
+            scales: {
+                yAxes: [
+                    {
+                        id: 'y-axis-1',
+                        type: 'linear',
+                        display: true,
+                        position: 'left'
+                    }
+                ]
+            }
+        };
+
         //  initial map
         $ctrl.map = {
             centre: {
@@ -65,7 +87,15 @@
                 click: function (marker, eventName, model) {
                     //  fills details of station.directive with information of clicked model
                     $ctrl.selectedStation = model;
-                    Server.getPriceTrend(model.id);
+                    Server.getPriceTrend(model.id).then(function(res) {
+                        console.log(res);
+                        //  transform dates into labels
+                        $ctrl.labels = res.data.dates.map(function(date) {
+                            let newDate = new Date(Date.parse(date));
+                            return newDate.getDate() + '.' + (newDate.getMonth() +1) + '.' + newDate.getFullYear()
+                        });
+                        $ctrl.data.push(res.data.e5, res.data.e10, res.data.diesel);
+                    });
                 }
             }
         };
@@ -75,36 +105,6 @@
 
             })
         };
-
-        $ctrl.labels = ["January", "February", "March", "April", "May", "June", "July"];
-        $ctrl.series = ['Series A', 'Series B'];
-        $ctrl.data = [
-            [65, 59, 80, 81, 56, 55, 40],
-            [28, 48, 40, 19, 86, 27, 90]
-        ];
-        $ctrl.onClick = function (points, evt) {
-            console.log(points, evt);
-        };
-        $ctrl.datasetOverride = [{yAxisID: 'y-axis-1'}, {yAxisID: 'y-axis-2'}];
-        $ctrl.options = {
-            scales: {
-                yAxes: [
-                    {
-                        id: 'y-axis-1',
-                        type: 'linear',
-                        display: true,
-                        position: 'left'
-                    },
-                    {
-                        id: 'y-axis-2',
-                        type: 'linear',
-                        display: true,
-                        position: 'right'
-                    }
-                ]
-            }
-        };
-
 
     }
 }());
