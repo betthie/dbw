@@ -14,7 +14,7 @@ application.config(function ($stateProvider, uiGmapGoogleMapApiProvider) {
         .state('root', {
             url: '/',
             component: 'root'
-        })
+        });
 
     uiGmapGoogleMapApiProvider.configure({
         key: 'AIzaSyCbEhNnFhkwWoFFeAZUrwzVDf7TcWk4coI',
