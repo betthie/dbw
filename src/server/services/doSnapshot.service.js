@@ -24,7 +24,7 @@
          *
          */
         execute: function(stations, callback) {
-
+            console.log(stations);
             //  create date
             let date = (function() {
                 let dt = new Date;
@@ -42,7 +42,7 @@
                             callback();
                         })
                     })
-                }
+                };
                 tasks.push(task);
             }
             //  wait until all promises are finished

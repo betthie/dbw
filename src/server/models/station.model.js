@@ -16,7 +16,7 @@
         houseNumber: String,
         place: String,
         location: Object,
-        openingHours: Array,
+        openingTimes: Array,
         isOpen: Boolean
     });
 
@@ -32,7 +32,7 @@
         newStation.houseNumber = station.houseNumber;
         newStation.place = station.place;
         newStation.location = station.location;
-        newStation.openingHours = station.openingHours;
+        newStation.openingTimes = station.openingTimes;
         newStation.isOpen = station.isOpen;
         return newStation;
     };
@@ -49,7 +49,7 @@
             place: station.place,
             houseNumber: station.houseNumber,
             location: station.location,
-            openingHours: station.openingHours,
+            openingTimes: station.openingTimes,
             isOpen: station.isOpen
         };
         let options = {upsert: true, new: true, setDefaultsOnInsert: true};

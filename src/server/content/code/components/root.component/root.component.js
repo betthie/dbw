@@ -100,14 +100,13 @@
         };
 
         $ctrl.doSnapshot = function (stations) {
+            console.log(stations);
             Server.doSnapshot(stations, function () {
 
             }).then(function() {
-                console.log($ctrl.selectedStation.id);
                 //  update price trends for markers
                 Server.getPriceTrend($ctrl.selectedStation.id).then(function(res) {
                     //  transform dates into labels
-                    console.log(res);
                     $ctrl.labels = res.data.dates.map(function(date) {
                         let newDate = new Date(Date.parse(date));
                         return newDate.getDate() + '.' + (newDate.getMonth() +1) + '.' + newDate.getFullYear()
