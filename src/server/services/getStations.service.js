@@ -49,28 +49,28 @@
                         console.log('request limit exceeded')
                     }
 
-                    let serverResponse = [];
-                        let tasks = [];
-                        // get this done by getStationDetails.service
-                        for (let i = 0; i < result.stations.length; i++) {
-                            let station = result.stations[i];
-                            //  uses service to get StationDetails
-                            let task = function (callback) {
-                                getStationDetails.execute(station, function (err, res) {
-                                    serverResponse.push(res.station);
-                                    callback();
-                                });
-                            };
-                            tasks.push(task);
-                        }
-                        //  wait until all promises are finished
-                        async.parallel(tasks, function (err) {
-                            if (err) throw err;
-                            callback(
-                                null,
-                                serverResponse
-                            )
-                        })
+                    let response = [];
+                    let tasks = [];
+                    // get this done by getStationDetails.service
+                    for (let i = 0; i < result.stations.length; i++) {
+                        let station = result.stations[i];
+                        //  uses service to get StationDetails
+                        let task = function (callback) {
+                            getStationDetails.execute(station, function (err, res) {
+                                response.push(res.station);
+                                callback();
+                            });
+                        };
+                        tasks.push(task);
+                    }
+                    //  wait until all promises are finished
+                    async.parallel(tasks, function (err) {
+                        if (err) throw err;
+                        callback(
+                            null,
+                            response
+                        )
+                    })
                 });
             });
 

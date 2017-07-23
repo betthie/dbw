@@ -30,6 +30,7 @@
 
     // save station
     snapshotSchema.statics.save = function (snapshot, callback) {
+        console.log(snapshot);
         let query = {date: snapshot.date, stationId: snapshot.stationId};
         let update = {
             stationId: snapshot.stationId,

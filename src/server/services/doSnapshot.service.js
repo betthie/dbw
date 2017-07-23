@@ -9,6 +9,7 @@
     const Snapshots = require('../models/snapshot.model.js');
     const Stations = require('../models/station.model');
     const moment = require('moment');
+    const async = require('async');
 
     module.exports = {
         getHttpMethod: function() {
@@ -23,27 +24,35 @@
          *
          */
         execute: function(stations, callback) {
-            console.log(stations);
+
             //  create date
             let date = (function() {
                 let dt = new Date;
                 return dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate();
             }());
             //  entry in database for every station and price per date
-            for(let i= 0; i < stations.length; i++) {
+            let tasks = [];
+            for(let i = 0; i< stations.length; i++) {
                 let station = Stations.create(stations[i]);
-                Stations.save(station, function(err, result) {
-                    //  create snapshot
-                    let snapshot = Snapshots.create(stations[i], date);
-                    Snapshots.save(snapshot, function(err, result) {
-
+                let task = function(callback) {
+                    Stations.save(station, function(err, result) {
+                        //  create snapshot
+                        let snapshot = Snapshots.create(stations[i], date);
+                        Snapshots.save(snapshot, function(err, result) {
+                            callback();
+                        })
                     })
-                })
+                }
+                tasks.push(task);
             }
-            callback(
-                null,
-                null
-            )
+            //  wait until all promises are finished
+            async.parallel(tasks, function (err) {
+                if (err) throw err;
+                callback(
+                    null,
+                    null
+                )
+            })
         }
     }
 }());

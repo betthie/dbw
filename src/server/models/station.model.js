@@ -16,6 +16,8 @@
         houseNumber: String,
         place: String,
         location: Object,
+        openingHours: Array,
+        isOpen: Boolean
     });
 
     // separate database logic from controller
@@ -30,6 +32,8 @@
         newStation.houseNumber = station.houseNumber;
         newStation.place = station.place;
         newStation.location = station.location;
+        newStation.openingHours = station.openingHours;
+        newStation.isOpen = station.isOpen;
         return newStation;
     };
 
@@ -45,6 +49,8 @@
             place: station.place,
             houseNumber: station.houseNumber,
             location: station.location,
+            openingHours: station.openingHours,
+            isOpen: station.isOpen
         };
         let options = {upsert: true, new: true, setDefaultsOnInsert: true};
         return this.model('Stations').findOneAndUpdate(query, update, options, callback)

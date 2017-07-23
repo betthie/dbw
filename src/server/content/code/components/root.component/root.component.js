@@ -88,7 +88,6 @@
                     //  fills details of station.directive with information of clicked model
                     $ctrl.selectedStation = model;
                     Server.getPriceTrend(model.id).then(function(res) {
-                        console.log(res);
                         //  transform dates into labels
                         $ctrl.labels = res.data.dates.map(function(date) {
                             let newDate = new Date(Date.parse(date));
@@ -103,6 +102,18 @@
         $ctrl.doSnapshot = function (stations) {
             Server.doSnapshot(stations, function () {
 
+            }).then(function() {
+                console.log($ctrl.selectedStation.id);
+                //  update price trends for markers
+                Server.getPriceTrend($ctrl.selectedStation.id).then(function(res) {
+                    //  transform dates into labels
+                    console.log(res);
+                    $ctrl.labels = res.data.dates.map(function(date) {
+                        let newDate = new Date(Date.parse(date));
+                        return newDate.getDate() + '.' + (newDate.getMonth() +1) + '.' + newDate.getFullYear()
+                    });
+                    $ctrl.data.push(res.data.e5, res.data.e10, res.data.diesel);
+                });
             })
         };
 

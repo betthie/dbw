@@ -24,7 +24,6 @@
          *
          */
         execute: function (request, callback) {
-
             //  pulls all prices from db
             Snapshots.get({ stationId: request.stationId}, function(err, prices) {
                 if (err) throw err;
@@ -40,8 +39,6 @@
                     trend.diesel.push(price.diesel);
                     trend.dates.push(price.date)
                 });
-
-                console.log(trend);
 
                 callback (
                     err,

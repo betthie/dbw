@@ -1,22 +1,32 @@
-<div class="ui-grid">
-    <div></div>
-    <h3 class="ui header">My Google Maps Demo</h3>
-    <div id="map"></div>
-    <input ng-model="$ctrl.radius"></input>
-    <button ng-click="$ctrl.doSnapshot($ctrl.stations)">save prices</button>
-    <station ng-repeat="station in $ctrl.stations" ng-if="station.id === $ctrl.selectedStation.id"></station>
-    <ui-gmap-google-map center="$ctrl.map.centre" options="$ctrl.options" zoom="$ctrl.map.zoom" events="$ctrl.map.events">
-        <ui-gmap-markers models="$ctrl.stations" coords="'location'" icon="'icon'" events="$ctrl.map.markerEvents">
+<div class="ui grid">
+    <div class="three wide column" id="sidebar">
+        <h3>Google Maps </h3>
 
-        </ui-gmap-markers>
-    </ui-gmap-google-map>
+        <input ng-model="$ctrl.radius"/>
+        <button ng-click="$ctrl.doSnapshot($ctrl.stations)">save prices</button>
+        <station ng-repeat="station in $ctrl.stations" ng-if="station.id === $ctrl.selectedStation.id"></station>
+        <canvas id="line" class="chart chart-line" chart-data="$ctrl.data"
+                chart-labels="$ctrl.labels" chart-series="$ctrl.series" chart-options="$ctrl.options"
+                chart-dataset-override="$ctrl.datasetOverride" chart-click="$ctrl.onClick" ng-show="true">
+        </canvas>
+    </div>
+    <div class="thirteen wide column" id="map">
+        <ui-gmap-google-map center="$ctrl.map.centre" options="$ctrl.options" zoom="$ctrl.map.zoom" events="$ctrl.map.events">
+            <ui-gmap-markers models="$ctrl.stations" coords="'location'" icon="'icon'" events="$ctrl.map.markerEvents">
 
-
-
-    <ui-view></ui-view>
+            </ui-gmap-markers>
+        </ui-gmap-google-map>
+    </div>
 </div>
+<!--
+<div id="map"></div>
 
-<canvas id="line" class="chart chart-line" chart-data="$ctrl.data"
-        chart-labels="$ctrl.labels" chart-series="$ctrl.series" chart-options="$ctrl.options"
-        chart-dataset-override="$ctrl.datasetOverride" chart-click="$ctrl.onClick" ng-show="true">
-</canvas>
+
+<station ng-repeat="station in $ctrl.stations" ng-if="station.id === $ctrl.selectedStation.id"></station>
+<ui-gmap-google-map center="$ctrl.map.centre" options="$ctrl.options" zoom="$ctrl.map.zoom" events="$ctrl.map.events">
+    <ui-gmap-markers models="$ctrl.stations" coords="'location'" icon="'icon'" events="$ctrl.map.markerEvents">
+
+    </ui-gmap-markers>
+</ui-gmap-google-map>
+
+
