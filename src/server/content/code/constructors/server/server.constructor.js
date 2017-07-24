@@ -12,14 +12,17 @@ Server.$inject = ['$http', '$q', '$location'];
 function Server($http, $q, $location) {
     const that = this;
     const rootUrl = $location.host() + ($location.port() !== 8080 ? ':' + $location.port() : '');
+    this.execute = {};
     this.repository = getRepository();
+
 
 
     return {
         // führt einen oder mehrere Requests auf dem Server aus und gibt deren Ergebnis zurück
         getStations: getStations,
         getPriceTrend: getPriceTrend,
-        doSnapshot: doSnapshot
+        doSnapshot: doSnapshot,
+        execute: that.execute
     };
 
     /**
@@ -44,6 +47,8 @@ function Server($http, $q, $location) {
            return res
         }));
     }
+
+
 
 
     /**
@@ -72,8 +77,35 @@ function Server($http, $q, $location) {
                 {
                     url: '/repository',
                     method: 'GET',
-                }).then(function(repo) {
-                    that.repository = repo.data;
+                }).then(function (repo) {
+                that.repository = repo.data;
+                for (let service in that.repository) {
+                    //  parameter via url string oder als objekt mitschicken
+                    if (that.repository[service].method === 'GET') {
+                        that.execute[service] = function (request) {
+                            //  url string zusammensetzen
+                            let urlString = '/services/' + service;
+                            if (that.repository[service].parameters.length) {
+                                urlString += '/?';
+                                let i = 0;
+                                let parameters = that.repository[service].parameters;
+                                for (let parameter in parameters) {
+                                    i !== 0 ? urlString += '&' : null;
+                                    urlString += parameters[parameter] + '=' + request[parameters[parameter]];
+                                    i++;
+                                }
+
+                            }
+                            return $q.resolve($http.get(urlString).then(function (res) {
+                                return res
+                            }))
+                        }
+
+                    } else if (that.repository[service].method === 'POST') {
+                        //  parameter via server-request mitschicken
+
+                    }
+                }
             }));
     }
 }

@@ -52,7 +52,7 @@ function addServices(dir, prefix) {
                 scope = scope[subScope];
             }
         });
-        // Lösche required modul
+        // Lösche required Modul
         delete require.cache[require.resolve(file)];
         let serviceName = path.basename(file, '.service.js').split('.')[0];
         if (Array.isArray(scope[serviceName])) {

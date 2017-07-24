@@ -64,9 +64,18 @@
                         longitude: e.latLng.lng()
                     };
                     //  request stations from server
+                    /*
                     Server.getStations({
                         location: location,
                         radius: $ctrl.radius,
+                        type: 'all',
+                        sort: 'dist'
+                    })
+                    */
+                    Server.execute.getStations({
+                        lat: location.latitude,
+                        long: location.longitude,
+                        rad: $ctrl.radius,
                         type: 'all',
                         sort: 'dist'
                     }).then(function (response) {
@@ -87,7 +96,7 @@
                 click: function (marker, eventName, model) {
                     //  fills details of station.directive with information of clicked model
                     $ctrl.selectedStation = model;
-                    Server.getPriceTrend(model.id).then(function(res) {
+                    Server.execute.getPriceTrend({ stationId: model.id }).then(function(res) {
                         //  transform dates into labels
                         $ctrl.labels = res.data.dates.map(function(date) {
                             let newDate = new Date(Date.parse(date));
@@ -105,7 +114,7 @@
 
             }).then(function() {
                 //  update price trends for markers
-                Server.getPriceTrend($ctrl.selectedStation.id).then(function(res) {
+                Server.execute.getPriceTrend({ stationId: $ctrl.selectedStation.id }).then(function(res) {
                     //  transform dates into labels
                     $ctrl.labels = res.data.dates.map(function(date) {
                         let newDate = new Date(Date.parse(date));

@@ -16,7 +16,7 @@
             return 'GET'
         },
         getParameters: function() {
-            return []
+            return ['stationId']
         },
         /*  @description - returns price trend of a given gas station
          *  @param {object} request

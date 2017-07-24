@@ -18,7 +18,7 @@
             return 'GET'
         },
         getParameters: function () {
-            return ['latitude', 'longitude', 'radius', 'sort', 'type']
+            return ['lat', 'long', 'rad', 'sort', 'type']
         },
         /*  holt Tankstellen von TankerkoenigAPI
          *  @param {object} request
