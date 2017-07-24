@@ -34,6 +34,7 @@
             let tasks = [];
             for(let i = 0; i< stations.length; i++) {
                 let station = Stations.create(stations[i]);
+                console.log(station);
                 let task = function(callback) {
                     Stations.save(station, function(err, result) {
                         //  create snapshot

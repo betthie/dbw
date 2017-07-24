@@ -79,24 +79,23 @@ function Server($http, $q, $location) {
                     method: 'GET',
                 }).then(function (repo) {
                 that.repository = repo.data;
-                console.log()
                 for (let service in that.repository) {
                     //  parameter via url string oder als objekt mitschicken
-                    let urlString = '/services/' + service;
+                    let urlString = '';
                     if (that.repository[service].method === 'GET') {
                         that.execute[service] = function (request) {
                             //  url string zusammensetzen
+                            urlString = '/services/' + service;
                             if (that.repository[service].parameters.length) {
                                 urlString += '/?';
-                                let i = 0;
                                 let parameters = that.repository[service].parameters;
-                                for (let parameter in parameters) {
+                                for (let i= 0; i< parameters.length; i++) {
                                     i !== 0 ? urlString += '&' : null;
-                                    urlString += parameters[parameter] + '=' + request[parameters[parameter]];
-                                    i++;
+                                    urlString += parameters[i] + '=' + request[parameters[i]];
                                 }
 
                             }
+                            console.log(urlString);
                             return $q.resolve($http.get(urlString).then(function (res) {
                                 return res
                             }))
@@ -106,16 +105,13 @@ function Server($http, $q, $location) {
                         //  parameter via server-request mitschicken
                         that.execute[service] = function (request) {
                             //  url string zusammensetzen
-                            let data = {};
-                            data[service] = request;
-                            console.log(data);
-                            return $q.resolve($http.post(urlString, data).then(function (res) {
+                            urlString = '/services/' + service;
+                            return $q.resolve($http.post(urlString, request).then(function (res) {
                                 return res
                             }))
                         }
                     }
                 }
-                console.log(that.execute)
             }));
     }
 }

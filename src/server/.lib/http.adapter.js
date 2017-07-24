@@ -26,9 +26,14 @@ function publishServices(urlPath, formats, config) {
         openHttpChannels[config.port] = true;
     }
 
+    server.get('/repository', function(req, res) {
+        return res.json(application.sendRepository())
+    });
+
     server.post('/services/:service', function(req, res) {
-        console.log(req.params);
-        application.execute(req.body, function(err, result) {
+        let data = {};
+        data[req.params.service] = req.body;
+        application.execute(data, function(err, result) {
             if (err) {
                 res.json(application.handleException(err));
             }
@@ -37,11 +42,6 @@ function publishServices(urlPath, formats, config) {
             }
         });
     });
-
-    server.get('/repository', function(req, res) {
-        return res.json(application.sendRepository())
-    });
-
 
     server.get('/services/:service/:params?', function(req, res) {
         let service = req.params.service;
