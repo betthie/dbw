@@ -79,12 +79,13 @@ function Server($http, $q, $location) {
                     method: 'GET',
                 }).then(function (repo) {
                 that.repository = repo.data;
+                console.log()
                 for (let service in that.repository) {
                     //  parameter via url string oder als objekt mitschicken
+                    let urlString = '/services/' + service;
                     if (that.repository[service].method === 'GET') {
                         that.execute[service] = function (request) {
                             //  url string zusammensetzen
-                            let urlString = '/services/' + service;
                             if (that.repository[service].parameters.length) {
                                 urlString += '/?';
                                 let i = 0;
@@ -103,9 +104,18 @@ function Server($http, $q, $location) {
 
                     } else if (that.repository[service].method === 'POST') {
                         //  parameter via server-request mitschicken
-
+                        that.execute[service] = function (request) {
+                            //  url string zusammensetzen
+                            let data = {};
+                            data[service] = request;
+                            console.log(data);
+                            return $q.resolve($http.post(urlString, data).then(function (res) {
+                                return res
+                            }))
+                        }
                     }
                 }
+                console.log(that.execute)
             }));
     }
 }

@@ -16,7 +16,7 @@
             return 'POST'
         },
         getParameters: function() {
-            return []
+            return ['stations']
         },
 
         /*  creates a snapshot, based on array of stations

@@ -109,8 +109,7 @@
         };
 
         $ctrl.doSnapshot = function (stations) {
-            console.log(stations);
-            Server.doSnapshot(stations, function () {
+            Server.execute.doSnapshot({stations : stations}, function () {
 
             }).then(function() {
                 //  update price trends for markers

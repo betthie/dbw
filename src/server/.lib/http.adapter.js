@@ -27,6 +27,7 @@ function publishServices(urlPath, formats, config) {
     }
 
     server.post('/services/:service', function(req, res) {
+        console.log(req.params);
         application.execute(req.body, function(err, result) {
             if (err) {
                 res.json(application.handleException(err));
