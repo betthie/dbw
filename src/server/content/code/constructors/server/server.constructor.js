@@ -16,60 +16,11 @@ function Server($http, $q, $location) {
     this.repository = getRepository();
 
 
-
     return {
         // führt einen oder mehrere Requests auf dem Server aus und gibt deren Ergebnis zurück
-        getStations: getStations,
-        getPriceTrend: getPriceTrend,
-        doSnapshot: doSnapshot,
         execute: that.execute
     };
 
-    /**
-     * Ruft Server für stationen auf
-     *   @param {object} request mit parametern für Tankstellen-Suche
-     *      .latitude
-     *      .longitude
-     *      .radius
-     *      .sort
-     *      .type
-     */
-    function getStations(request) {
-
-        const latitude = request.location.latitude;
-        const longitude = request.location.longitude;
-        const radius = request.radius;
-        const type = request.type;
-        const sort = request.sort;
-
-        return $q.resolve($http.get('/services/getStations/?lat=' + latitude + '&long=' + longitude + '&rad=' +
-            radius + '&type=' + type + '&sort=' + sort).then(function (res) {
-           return res
-        }));
-    }
-
-
-
-
-    /**
-     * Ruft Server für snapshot auf
-     *   @param {array} of stations
-     *
-     */
-    function doSnapshot(request) {
-        if(request.length) {
-            let data = {};
-            data['doSnapshot'] = request;
-            return $q.resolve($http.post('/services/doSnapshot', data));
-        }
-    }
-
-
-    function getPriceTrend(stationId) {
-        return $q.resolve($http.get('/services/getPriceTrend/?stationId=' + stationId).then(function(res) {
-            return res
-        }))
-    }
 
     function getRepository() {
         return $q.resolve(
@@ -78,6 +29,7 @@ function Server($http, $q, $location) {
                     url: '/repository',
                     method: 'GET',
                 }).then(function (repo) {
+                //  implementiert methoden für service-aufruf
                 that.repository = repo.data;
                 for (let service in that.repository) {
                     //  parameter via url string oder als objekt mitschicken
@@ -89,7 +41,7 @@ function Server($http, $q, $location) {
                             if (that.repository[service].parameters.length) {
                                 urlString += '/?';
                                 let parameters = that.repository[service].parameters;
-                                for (let i= 0; i< parameters.length; i++) {
+                                for (let i = 0; i < parameters.length; i++) {
                                     i !== 0 ? urlString += '&' : null;
                                     urlString += parameters[i] + '=' + request[parameters[i]];
                                 }

@@ -136,7 +136,9 @@ function onException(callback) {
 function handleException(err) {
     return exceptionHandler(err);
 }
-
+/**
+ * Gibt die http-Methode und Parameter der registrierten Services zurück
+ */
 function sendRepository() {
     let data = {};
     for(let service in repository){
