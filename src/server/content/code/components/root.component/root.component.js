@@ -64,14 +64,6 @@
                         longitude: e.latLng.lng()
                     };
                     //  request stations from server
-                    /*
-                    Server.getStations({
-                        location: location,
-                        radius: $ctrl.radius,
-                        type: 'all',
-                        sort: 'dist'
-                    })
-                    */
                     Server.execute.getStations({
                         lat: location.latitude,
                         long: location.longitude,

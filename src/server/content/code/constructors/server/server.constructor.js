@@ -95,7 +95,6 @@ function Server($http, $q, $location) {
                                 }
 
                             }
-                            console.log(urlString);
                             return $q.resolve($http.get(urlString).then(function (res) {
                                 return res
                             }))

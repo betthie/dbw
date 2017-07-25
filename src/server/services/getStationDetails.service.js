@@ -25,14 +25,11 @@
 
         /*  @description - returns price trend of a given gas station
          *  @param {object} request
-         *      .stationId || [array of stationIds]
-         *
+         *      .stationId
          */
         execute: function (request, callback) {
             //  send request to TankerkoenigAPI for prices of given stationId
-
             const url = Config.getStationDetailsQueryUrl(request.id);
-
             https.get(url, function (response) {
                 let data = [];
                 response.on('data', function (chunk) {
@@ -43,10 +40,9 @@
                     try {
                         //  send data to frontend here
                         result = JSON.parse(data.join(''));
-
                     } catch (err) {
-                        console.log(err);
                         // throw "request limit exceeded"
+                        console.log('request limit exceeded');
                     }
                     callback(
                         null,
