@@ -20,6 +20,16 @@
         "use strict";
         let $ctrl = this;
         $ctrl.stations = [];
+        $ctrl.prices = {
+            e5: [],
+            e10: [],
+            diesel: []
+        };
+        $ctrl.average = {
+            e5,
+            e10,
+            diesel
+        };
         $ctrl.selectedStation = {};
         $ctrl.radius = 1.5;
 
@@ -73,14 +83,27 @@
                     }).then(function (response) {
 
                         $ctrl.stations = [];
+                        //  @todo - look for faster way to clear arrays
+                        $ctrl.prices.e5 = [];
+                        $ctrl.prices.e10 = [];
+                        $ctrl.prices.diesel = [];
                         //  transform response.data into valid format for maps directive
+                        //  @todo -  in map function umwandeln
                         for (let i = 0; i < response.data.length; i++) {
                             let station = response.data[i];
                             station.location = {};
                             station.location.latitude = station.lat;
                             station.location.longitude = station.lng;
                             $ctrl.stations.push(station);
+                            //  average of all gas prices
+                            $ctrl.prices.e5.push(station.e5);
+                            $ctrl.prices.e10.push(station.e10);
+                            $ctrl.prices.diesel.push(station.diesel);
                         }
+                        $ctrl.average.e5 = average($ctrl.prices.e5);
+                        $ctrl.average.e10 = average($ctrl.prices.e10);
+                        $ctrl.average.diesel = average($ctrl.prices.diesel);
+
                     })
                 }
             },

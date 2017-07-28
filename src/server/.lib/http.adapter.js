@@ -58,6 +58,11 @@ function publishServices(urlPath, formats, config) {
         });
     });
 
+    server.get('/repository', function(req, res) {
+        return res.json(application.sendRepository())
+    });
+
+
 }
 
 /**
