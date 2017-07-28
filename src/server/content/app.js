@@ -27,11 +27,13 @@ application.config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
         chartColors: ['#c400bb', '#00c999'],
-        responsive: false
+        responsive: false,
+
     });
     // Configure all line charts
     ChartJsProvider.setOptions('line', {
-        showLines: false
+        showLines: true,
+        line: 'curved'
     });
 }]);
 

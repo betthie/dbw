@@ -16,7 +16,6 @@ function Server($http, $q, $location) {
     this.repository = getRepository();
 
 
-
     return {
         // führt einen oder mehrere Requests auf dem Server aus und gibt deren Ergebnis zurück
         execute: that.execute
@@ -30,6 +29,7 @@ function Server($http, $q, $location) {
                     url: '/repository',
                     method: 'GET',
                 }).then(function (repo) {
+                //  implementiert methoden für service-aufruf
                 that.repository = repo.data;
                 for (let service in that.repository) {
                     //  parameter via url string oder als objekt mitschicken
@@ -41,7 +41,7 @@ function Server($http, $q, $location) {
                             if (that.repository[service].parameters.length) {
                                 urlString += '/?';
                                 let parameters = that.repository[service].parameters;
-                                for (let i= 0; i< parameters.length; i++) {
+                                for (let i = 0; i < parameters.length; i++) {
                                     i !== 0 ? urlString += '&' : null;
                                     urlString += parameters[i] + '=' + request[parameters[i]];
                                 }
