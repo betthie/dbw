@@ -13,7 +13,7 @@
     "moment": "^2.18.1",
     "mongoose": "4.8.6",
     "mongoose-assert": "^1.0.2",
-    "nodejs": "0.0.0",
+    "nodejs": "6.0.0",
     "nodemon": "^1.11.0",
     "path": "^0.12.7",
     "semantic-ui": "^2.2.11"
