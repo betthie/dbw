@@ -1,32 +1,43 @@
-<div class="ui grid">
-    <div class="three wide column" id="sidebar">
-        <h3>Google Maps </h3>
-
-        <input ng-model="$ctrl.radius"/>
-        <button ng-click="$ctrl.doSnapshot($ctrl.stations)">save prices</button>
-        <station ng-repeat="station in $ctrl.stations" ng-if="station.id === $ctrl.selectedStation.id"></station>
-        <canvas id="line" class="chart chart-line" chart-data="$ctrl.data"
-                chart-labels="$ctrl.labels" chart-series="$ctrl.series" chart-options="$ctrl.options"
-                chart-dataset-override="$ctrl.datasetOverride" chart-click="$ctrl.onClick" ng-show="true">
-        </canvas>
-    </div>
-    <div class="thirteen wide column" id="map">
+<div id="mainframe">
+    <div id="map">
         <ui-gmap-google-map center="$ctrl.map.centre" options="$ctrl.options" zoom="$ctrl.map.zoom" events="$ctrl.map.events">
-            <ui-gmap-markers models="$ctrl.stations" coords="'location'" icon="'icon'" events="$ctrl.map.markerEvents">
+            <ui-gmap-markers models="$ctrl.stations" coords="'location'" icon="'icon'" events="$ctrl.map.markerEvents" style="height:2000px">
 
             </ui-gmap-markers>
         </ui-gmap-google-map>
     </div>
+    <div id="infowindow" ng-if="$ctrl.selectedStation.id">
+        <div class="content">
+            <h2>Location Details</h2>
+            <div class="ui right labeled input small">
+
+                <input ng-model="$ctrl.radius" placeholder="Radius">
+                <div class="ui label">km</div>
+            </div>
+            <div class="ui list">
+                <div class="item"># of stations: {{$ctrl.stations.length}}</div>
+                <div class="item">Average Price E5: {{$ctrl.overallAverage.e5}}</div>
+                <div class="item">Average Price E10: {{$ctrl.overallAverage.e10}}</div>
+                <div class="item">Average Price Diesel: {{$ctrl.overallAverage.diesel}}</div>
+            </div>
+            <button class="ui button primary" ng-click="$ctrl.doSnapshot($ctrl.stations)">Save Prices</button>
+            <h3>Gas Station Information</h3>
+            <div class="ui list">
+                <div class="item">{{$ctrl.selectedStation.name}}</div>
+                <div class="item">{{$ctrl.selectedStation.street}}, {{$ctrl.selectedStation.postCode}} {{$ctrl.selectedStation.place}}</div>
+                <div class="item" ng-repeat="openingTime in $ctrl.selectedStation.openingTimes">{{openingTime.text}}: {{openingTime.start}} - {{openingTime.end}}</div>
+                <div class="item">Open: {{$ctrl.selectedStation.isOpen}}</div>
+                <div class="item">E5: {{$ctrl.selectedStation.e5}} €</div>
+                <div class="item">E10: {{$ctrl.selectedStation.e10}} €</div>
+                <div class="item">Diesel: {{$ctrl.selectedStation.diesel}} €</div>
+            </div>
+            <canvas id="line" class="chart chart-line" chart-data="$ctrl.data"
+                    chart-labels="$ctrl.labels" chart-series="$ctrl.series" chart-options="$ctrl.options"
+                    chart-dataset-override="$ctrl.datasetOverride" chart-click="$ctrl.onClick" ng-show="true">
+            </canvas>
+        </div>
+
+    </div>
 </div>
-<!--
-<div id="map"></div>
-
-
-<station ng-repeat="station in $ctrl.stations" ng-if="station.id === $ctrl.selectedStation.id"></station>
-<ui-gmap-google-map center="$ctrl.map.centre" options="$ctrl.options" zoom="$ctrl.map.zoom" events="$ctrl.map.events">
-    <ui-gmap-markers models="$ctrl.stations" coords="'location'" icon="'icon'" events="$ctrl.map.markerEvents">
-
-    </ui-gmap-markers>
-</ui-gmap-google-map>
 
 

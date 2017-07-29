@@ -15,12 +15,10 @@ function Server($http, $q, $location) {
     this.execute = {};
     this.repository = getRepository();
 
-
     return {
         // führt einen oder mehrere Requests auf dem Server aus und gibt deren Ergebnis zurück
         execute: that.execute
     };
-
 
     function getRepository() {
         return $q.resolve(
@@ -45,13 +43,11 @@ function Server($http, $q, $location) {
                                     i !== 0 ? urlString += '&' : null;
                                     urlString += parameters[i] + '=' + request[parameters[i]];
                                 }
-
                             }
                             return $q.resolve($http.get(urlString).then(function (res) {
                                 return res
                             }))
                         }
-
                     } else if (that.repository[service].method === 'POST') {
                         //  parameter via server-request mitschicken
                         that.execute[service] = function (request) {

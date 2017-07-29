@@ -1,6 +1,6 @@
 
 .angular-google-map-container {
-    height: 300px;
+    height: 100vh;
 }
 
 .chart-legend, .bar-legend, .line-legend, .pie-legend, .radar-legend, .polararea-legend, .doughnut-legend {
@@ -36,5 +36,5 @@
 
 }
 #sidebar {
-    background-color: cornflowerblue;
+
 }

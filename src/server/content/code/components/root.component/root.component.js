@@ -25,11 +25,6 @@
             e10: [],
             diesel: []
         };
-        $ctrl.average = {
-            e5,
-            e10,
-            diesel
-        };
         $ctrl.selectedStation = {};
         $ctrl.radius = 1.5;
 
@@ -38,6 +33,12 @@
         $ctrl.data = [];
         $ctrl.labels = [];
         $ctrl.series = ['E5', 'E10', 'Diesel'];
+        $ctrl.average = {};
+        $ctrl.overallAverage = {
+            e5: '',
+            e10: '',
+            diesel: ''
+        };
         $ctrl.onClick = function (points, evt) {
             console.log(points, evt);
         };
@@ -100,9 +101,9 @@
                             $ctrl.prices.e10.push(station.e10);
                             $ctrl.prices.diesel.push(station.diesel);
                         }
-                        $ctrl.average.e5 = average($ctrl.prices.e5);
-                        $ctrl.average.e10 = average($ctrl.prices.e10);
-                        $ctrl.average.diesel = average($ctrl.prices.diesel);
+                        $ctrl.overallAverage.e5 = average($ctrl.prices.e5);
+                        $ctrl.overallAverage.e10 = average($ctrl.prices.e10);
+                        $ctrl.overallAverage.diesel = average($ctrl.prices.diesel);
 
                     })
                 }
@@ -111,13 +112,19 @@
                 click: function (marker, eventName, model) {
                     //  fills details of station.directive with information of clicked model
                     $ctrl.selectedStation = model;
+                    console.log($ctrl.selectedStation);
                     Server.execute.getPriceTrend({ stationId: model.id }).then(function(res) {
                         //  transform dates into labels
                         $ctrl.labels = res.data.dates.map(function(date) {
                             let newDate = new Date(Date.parse(date));
                             return newDate.getDate() + '.' + (newDate.getMonth() +1) + '.' + newDate.getFullYear()
                         });
+                        $ctrl.data = [];
                         $ctrl.data.push(res.data.e5, res.data.e10, res.data.diesel);
+                        //  mittelwert errechnen
+                        $ctrl.average.e5 = average(res.data.e5);
+                        $ctrl.average.e10 = average(res.data.e10);
+                        $ctrl.average.diesel = average(res.data.diesel);
                     });
                 }
             }
@@ -134,7 +141,12 @@
                         let newDate = new Date(Date.parse(date));
                         return newDate.getDate() + '.' + (newDate.getMonth() +1) + '.' + newDate.getFullYear()
                     });
+                    $ctrl.data = [];
                     $ctrl.data.push(res.data.e5, res.data.e10, res.data.diesel);
+                    //  mittelwert errechnen
+                    $ctrl.average.e5 = average(res.data.e5);
+                    $ctrl.average.e10 = average(res.data.e10);
+                    $ctrl.average.diesel = average(res.data.diesel);
                 });
             })
         };
@@ -142,3 +154,11 @@
     }
 }());
 
+function average(array) {
+    let sum = 0;
+    for(let i= 0; i < array.length; i++) {
+        sum += array[i];
+    }
+    //  *100 / 100 um auf zwei kommastellen zu runden
+    return Math.round((sum*100)/array.length)/100;
+}

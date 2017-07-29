@@ -40,14 +40,14 @@
                     try {
                         //  send data to frontend here
                         result = JSON.parse(data.join(''));
+                        callback(
+                            null,
+                            result
+                        )
                     } catch (err) {
                         // throw "request limit exceeded"
                         console.log('request limit exceeded');
                     }
-                    callback(
-                        null,
-                        result
-                    )
                 });
             });
 
